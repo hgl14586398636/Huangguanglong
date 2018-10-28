@@ -1,0 +1,68 @@
+package LegendBattle;
+/**
+ * 
+ * <p>类{@code Hero}}英雄类，针对英雄赋属性
+ * @author Administrator
+ *<br>拥有属性生命值、攻击力、名字、攻击距离、经验值
+ *<br>拥有方法getHealth、getAttack、getExp、getAttackRange、getName
+ */
+
+abstract class Hero {
+	
+	protected int HP;
+	protected int MP;
+	protected int attackRange;
+	protected int Exp;
+	protected String Name;
+	public Hero() {
+		HP = 500;
+		MP = 60;
+		attackRange = 150;
+		Exp = 25;
+		Name="";
+	}
+/*
+ * <p>英雄的各种属性
+ */
+	public Hero(int health, int attack, int attackRange, int exp,String name) {
+		this.HP = health;
+		this.MP = attack;
+		this.attackRange = attackRange;
+		this.Exp = exp;
+		this.Name=name;
+	}
+
+	public int getHealth() {
+		return HP;
+	}
+
+	public void setHealth(int health) {
+		this.HP = health;
+	}
+
+	public int getAttack() {
+		return MP;
+	}
+
+	public void setAttack(int attack) {
+		this.MP = attack;
+	}
+
+	public int getAttackRange() {
+		return attackRange;
+	}
+
+	public void setAttackRange(int attackRange) {
+		this.attackRange = attackRange;
+	}
+
+	public int getExp() {
+		return Exp;
+	}
+
+	public void setExp(int exp) {
+		this.Exp = exp;
+	}
+	
+	
+}
