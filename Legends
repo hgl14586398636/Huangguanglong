@@ -1,0 +1,244 @@
+package LegendBattle;
+
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+/**
+ * 建立控制版面
+ * @author Administrator
+ *<p>地图大小
+ *since 2018/10/25
+ */
+public class BattleField extends JFrame{
+	
+	MyPanel mp = null;
+	private int[][] map;
+	private int n;
+	private int m;
+	private List<Hero> heros = new ArrayList<Hero>();
+	
+	public static void main(String[] args) {
+		BattleField BF = new BattleField(64, 63);
+	}	
+	public BattleField() {
+		mp=new MyPanel();
+		this.add(mp);
+		
+		//事件监听
+		this.addKeyListener(mp);
+		
+		this.setSize(50,50);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+	
+	public BattleField(int n, int m) {
+		this.n = n;
+		this.m = m;
+		
+		map = new int[n][m];
+		
+		for (int i = 0; i < n; i++) 
+			for (int j = 0; j < m; j++) {
+				map[i][j] = 0;
+			}
+		
+		mp=new MyPanel();
+		mp.setSize(m, n);
+		this.add(mp);
+		
+		//事件监听
+		this.addKeyListener(mp);
+		
+		this.setSize(m * 10,n * 10);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+	
+	public void printField() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				System.out.print(map[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+	
+}
+/**
+ * <p>类{@code MyPanel}版面的细节设计
+ * @author Administrator
+ *
+ */
+class MyPanel extends JPanel implements KeyListener
+{
+	int x2= 17;
+	int y2= 300;
+	int x1=500;
+	int y1=300;
+	int x3= x2;
+	int y3= y2;
+	int x4= x1;
+	int y4= y1;
+	int m;
+	int n;
+	public void paint(Graphics g)
+	{
+		/**
+		 * 画面景物的设定
+		 */
+		super.paint(g);
+		g.drawString(" <--UZI", x1,  y1);
+		g.drawString("MLXG-->", x2,  y2);
+		g.drawString("^^ <--Letme", 500,  500);
+		g.drawString("Ming--> ^^", 17,  500);
+		g.drawString("□ <--Xiaohu", 500,  100);
+		g.drawString("Kasha--> □", 12,  100);
+		g.drawString("△<--Jakeylove", 500,  200);
+		g.drawString("Ning-->△", 12,  200);
+		g.drawString("<--Rookie", 500,  400);
+		g.drawString("Virus-->", 12,  400);
+		g.drawString("oo", x3+50,  y3);
+		g.drawString("oo", x4-20,  y4);
+		g.drawString("Blue", 150, 150);
+		g.drawString("Red", 150, 450);
+		g.drawString("Red", 450, 150);
+		g.drawString("Blue", 450, 450);
+		g.fillRect(250, 100, 20, 10);
+		g.fillRect(350, 100, 20, 10);
+		g.fillRect(250, 450, 20, 10);
+		g.fillRect(350, 450, 20, 10);
+		
+		g.fillOval(200, 200, 20, 10);
+		g.fillOval(200, 400, 20, 10);
+		g.fillOval(400, 200, 20, 10);
+		g.fillOval(400, 400, 20, 10);
+		for(int i=0;i<600;i++)
+		{
+			g.drawString("***",1, i);
+		}
+		for(int i=0;i<600;i++)
+		{
+			g.drawString("***",600, i);
+		}for(int i=0;i<600;i++)
+		{
+			for(int j=8;j<20;j++)
+			{
+				g.drawString("*",i,j);
+			}
+			
+		}for(int i=0;i<611;i++)
+		{
+			for(int j=600;j<612;j++)
+			{
+				g.drawString("*",i, j);
+			}
+			
+		}
+	}
+	
+	public void setSize(int m, int n)
+	{
+		this.m = m;
+		this.n = n;
+	}
+ 
+	@Override//方向控制键被按下
+	public void keyPressed(KeyEvent e) {
+		//System.out.println("被按下"+(char)e.getKeyCode());
+		/**
+		 * 键盘类，用键盘控制英雄的行动
+		 */
+		switch(e.getKeyCode())
+		{
+			case KeyEvent.VK_UP:
+				if (y1 > 10)
+				y1-=10;
+				y4=y1;
+				x4=x1;
+				//调用repaint()函数，重新绘制小球位置
+				this.repaint();
+				break;
+			case KeyEvent.VK_DOWN:
+				if (y1 < n * 10 - 10)
+				y1+=10;
+				y4=y1;
+				x4=x1;
+				//调用repaint()函数，重新绘制小球位置
+				this.repaint();
+				break;
+			case KeyEvent.VK_LEFT:
+				if (x1 > 10)
+				x1-=10;
+				x4=x1;
+				//调用repaint()函数，重新绘制小球位置
+				this.repaint();
+				break;
+			case KeyEvent.VK_RIGHT:
+				if (x1 < m * 10 - 10)
+				x1+=10;
+				x4=x1;
+				//调用repaint()函数，重新绘制小球位置
+				this.repaint();
+				break;
+			case KeyEvent.VK_W:
+				if (y2 > 10)
+				y2-=10;
+				y3=y2;
+				x3=x2;
+				//调用repaint()函数，重新绘制小球位置
+				this.repaint();
+				break;
+			case KeyEvent.VK_S:
+				if (y2 < n * 10 - 10)
+				y2+=10;
+				y3=y2;
+				x3=x2;
+				//调用repaint()函数，重新绘制小球位置
+				this.repaint();
+				break;
+			case KeyEvent.VK_A:
+				if (x2 > 10)
+				x2-=10;
+				x3=x2;
+				//调用repaint()函数，重新绘制小球位置
+				this.repaint();
+				break;
+			case KeyEvent.VK_D:
+				if (x2 < m * 10 - 10)
+				x2+=10;
+				x3=x2;
+				//调用repaint()函数，重新绘制小球位置
+				this.repaint();
+				break;
+			case KeyEvent.VK_C:
+				while (x3 <x1-60)
+				x3+=1;
+				//C为左方英雄及技能键
+				this.repaint();
+				break;
+			case KeyEvent.VK_M:
+				while (x4 >x2+80)
+				x4-=1;
+				//M为右方英雄的技能键
+				this.repaint();
+				break;
+		}
+		
+	}
+ 
+	@Override//表示具体一个值被输出，例如：F1
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override//键被释放
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
+}
